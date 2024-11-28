@@ -30,7 +30,7 @@ const Navbar = () => {
           href={"/"}
           className="text-2xl md:text-5xl text-white font-semibold"
         >
-          MO
+          <img src="/images/Logo.png" width="50" height="50"></img>
         </Link>
         <div className="mobile-menu block md:hidden">
           {!navbarOpen ? (
