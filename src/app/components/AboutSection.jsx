@@ -1,5 +1,6 @@
 "use client";
-import React, { useTransition, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 import Image from "next/image";
 import TabButton from "./TabButton";
 
@@ -42,12 +43,20 @@ const TAB_DATA = [
 
 const AboutSection = () => {
   const [tab, setTab] = useState("skills");
-  const [isPending, startTransition] = useTransition();
+  const contentRef = useRef();
+
+  // Animace na změnu tabulátoru
+  useEffect(() => {
+    gsap.from(contentRef.current, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      ease: "power3.out",
+    });
+  }, [tab]);
 
   const handleTabChange = (id) => {
-    startTransition(() => {
-      setTab(id);
-    });
+    setTab(id);  // Bez použití useTransition
   };
 
   return (
@@ -85,7 +94,7 @@ const AboutSection = () => {
               Certifications{" "}
             </TabButton>
           </div>
-          <div className="mt-8">
+          <div ref={contentRef} className="mt-8">
             {TAB_DATA.find((t) => t.id === tab).content}
           </div>
         </div>
