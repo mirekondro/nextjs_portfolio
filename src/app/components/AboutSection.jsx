@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import TabButton from "./TabButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TAB_DATA = [
   {
@@ -44,8 +47,8 @@ const TAB_DATA = [
 const AboutSection = () => {
   const [tab, setTab] = useState("skills");
   const contentRef = useRef();
+  const imageRef = useRef();
 
-  // Animace na změnu tabulátoru
   useEffect(() => {
     gsap.from(contentRef.current, {
       opacity: 0,
@@ -53,16 +56,52 @@ const AboutSection = () => {
       duration: 1,
       ease: "power3.out",
     });
+
+    gsap.from(imageRef.current, {
+      opacity: 0,
+      y: 100,
+      duration: 1,
+      scrollTrigger: {
+        trigger: imageRef.current,
+        start: "top 80%",  
+        end: "top 20%",   
+        scrub: true,      
+        markers: false,    
+      },
+    });
   }, [tab]);
 
+  const handleMouseEnter = () => {
+    gsap.to(imageRef.current, {
+      scale: 1.1,  
+      duration: 0.5,  
+      ease: "power2.out",  
+    });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(imageRef.current, {
+      scale: 1,
+      duration: 0.5,
+      ease: "power2.in",  
+    });
+  };
+
   const handleTabChange = (id) => {
-    setTab(id);  // Bez použití useTransition
+    setTab(id);
   };
 
   return (
     <section className="text-white" id="about">
       <div className="md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16">
-        <Image src="/images/about-image.png" width={500} height={500} />
+        <div
+          ref={imageRef} 
+          className="transition-transform ease-out duration-700"
+          onMouseEnter={handleMouseEnter}  
+          onMouseLeave={handleMouseLeave}  
+        >
+          <Image src="/images/about-image.png" width={500} height={500} />
+        </div>
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
           <p className="text-base lg:text-lg">
