@@ -4,6 +4,8 @@ This is a portfolio website built with Next.js and Tailwind CSS.
 
 ## Installation
 
+npm install gsap
+
 Install the dependencies: `npm install`
 
 ## Usage
