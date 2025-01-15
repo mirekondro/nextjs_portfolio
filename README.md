@@ -1,5 +1,7 @@
 # Portfolio Website
 
+![screencapture-mirekondro-vercel-app-2025-01-15-07_47_23](https://github.com/user-attachments/assets/b9217ca1-89a9-4069-be00-86e7088ccca2)
+
 This is a portfolio website built with Next.js and Tailwind CSS.
 
 ## Installation
